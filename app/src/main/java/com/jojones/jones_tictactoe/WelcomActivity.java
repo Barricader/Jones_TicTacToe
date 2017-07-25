@@ -17,7 +17,6 @@ public class WelcomActivity extends AppCompatActivity {
     public static String pTwoName = "";
     public static int theme = 0;
 
-    private SharedPreferences sharedPreferences;
     private int infoState = 0;
 
     @SuppressLint("SetTextI18n")
@@ -26,20 +25,12 @@ public class WelcomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
 
-        sharedPreferences = this.getSharedPreferences("com.jojones.jones_tictactoe", Context.MODE_PRIVATE);
-
-        String p1 = sharedPreferences.getString("p1", "");
-        String p2 = sharedPreferences.getString("p2", "");
-        int theme = sharedPreferences.getInt("theme", -1);
-
         // Check if pref already saved
-        if (p1.equals("") || p2.equals("") || theme <= 0) {
             infoState = 1;
             ((TextView) findViewById(R.id.txtQuestion)).setText("Player 1's Name");
             ((EditText) findViewById(R.id.etAnswer)).setText("PlayerOne");
             findViewById(R.id.tbYesNo).setVisibility(View.INVISIBLE);
             findViewById(R.id.etAnswer).setVisibility(View.VISIBLE);
-        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -55,18 +46,10 @@ public class WelcomActivity extends AppCompatActivity {
                 case 0:
                     success = true;
 
-                    if (btnSaved.isChecked()) {
-                        pOneName = sharedPreferences.getString("p1", "");
-                        pTwoName = sharedPreferences.getString("p2", "");
-                        theme = sharedPreferences.getInt("theme", -1);
-
-                        goToGame();
-                    }
-                    else {
                         question.setText("Player 1's Name");
+                        text.setText("PlayerOne");
                         btnSaved.setVisibility(View.INVISIBLE);
                         text.setVisibility(View.VISIBLE);
-                    }
                     break;
                 case 1:
                     // Check if name is not empty
@@ -95,8 +78,6 @@ public class WelcomActivity extends AppCompatActivity {
                 case 3:
                     if (theme > 0) {
                         success = true;
-
-                        savePreferences();
 
                         goToGame();
                     }
@@ -134,12 +115,6 @@ public class WelcomActivity extends AppCompatActivity {
                 theme = -1;
                 border.setVisibility(View.INVISIBLE);
         }
-    }
-
-    public void savePreferences() {
-        sharedPreferences.edit().putString("p1", pOneName).apply();
-        sharedPreferences.edit().putString("p2", pTwoName).apply();
-        sharedPreferences.edit().putInt("theme", theme).apply();
     }
 
     public void goToGame() {

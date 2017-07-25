@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pOneName + "'s\nTurn");
 
-        b = new Board();
+        b = new Board(this);
         imgs[0] = (ImageView) findViewById(R.id.square0);
         imgs[1] = (ImageView) findViewById(R.id.square1);
         imgs[2] = (ImageView) findViewById(R.id.square2);
@@ -59,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    @SuppressLint("SetTextI18n")
+    public void updateImg(int img, Board.State s) {
+        imgs[img].setImageBitmap(s == Board.State.SQUARE_O ? activeO : activeX);
+    }
+
     public void squarePressed(View view) {
         int squareID = -1;
 
@@ -96,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (b.squares[squareID] == Board.State.SQUARE_EMPTY && b.winner == 0) {
-            b.updateSquare(squareID, b.turn % 2 == 0 ? Board.State.SQUARE_O : Board.State.SQUARE_X);
-            imgs[squareID].setImageBitmap(b.turn % 2 == 1 ? activeO : activeX);
+            b.updateSquare(squareID, b.playerPiece);
+//            imgs[squareID].setImageBitmap(b.turn % 2 == 1 ? activeO : activeX);
 
             // TODO: show player's game piece
 
-            ((TextView) findViewById(R.id.txtNameTurn)).setText((b.turn % 2 == 0 ? WelcomActivity.pTwoName : WelcomActivity.pOneName) + "'s\nTurn");
+//            ((TextView) findViewById(R.id.txtNameTurn)).setText((b.turn % 2 == 0 ? WelcomActivity.pTwoName : WelcomActivity.pOneName) + "'s\nTurn");
         }
 
         if (b.winner > 0) {

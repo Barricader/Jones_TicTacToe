@@ -1,5 +1,7 @@
 package com.jojones.jones_tictactoe;
 
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,15 +18,20 @@ class Board {
     static final int NUM_SQUARES = 9;
 
     State[] squares;
-    int turn;
     byte winner;
     AILevel aiLevel;
+    State playerPiece;
 
-    Board() {
+    MainActivity ma;
+
+    Board(MainActivity ma) {
         squares = new State[NUM_SQUARES];
-        turn = 1;
         winner = 0;
-        aiLevel = AILevel.OFF;
+        aiLevel = AILevel.HARD; // TODO: FIX
+        playerPiece = State.SQUARE_X;
+        // TODO: change above when you can choose piece
+
+        this.ma = ma;
 
         for (int i = 0; i < NUM_SQUARES; i++) {
             squares[i] = State.SQUARE_EMPTY;
@@ -35,111 +42,173 @@ class Board {
         if (sq < NUM_SQUARES) {
             squares[sq] = s;
 
-            turn++;
+            ma.updateImg(sq, s);
 
             // Check win conditions
             winner = checkWin();
             if (winner != 0) {
                 System.out.println(winner == 1?"X WINS":winner == 2?"O WINS":"TIE");
             }
+            else {
+                if (aiLevel != AILevel.OFF) {
+                    moveAI();
+                }
+            }
         }
     }
 
-    private void moveAI() {
-        if (aiLevel == AILevel.EASY) {
-            System.out.println("EASY AI MOVES");
+    void updateAI(int sq, State s) {
+        squares[sq] = s;
 
-            State[] s = new State[NUM_SQUARES];
-            System.arraycopy(squares, 0, s, 0, s.length);
+        ma.updateImg(sq, s);
+
+        // Check win conditions
+        winner = checkWin();
+        if (winner != 0) {
+            System.out.println(winner == 1?"X WINS":winner == 2?"O WINS":"TIE");
+        }
+
+    }
+
+    private void moveAI() {
+        boolean isValid = false;
+        if (aiLevel == AILevel.EASY) {
+            while (!isValid) {
+                System.out.println("EASY AI MOVES");
+
+                State[] s = new State[NUM_SQUARES];
+                System.arraycopy(squares, 0, s, 0, s.length);
 
 //            ArrayList<Integer> moves = new ArrayList<>();
 
-            HashMap<Integer, Integer> sc2 = new HashMap<>();
+                HashMap<Integer, Integer> sc2 = new HashMap<>();
 
-            for (int i = 0; i < s.length; i++) {
-                if (s[i] == State.SQUARE_EMPTY) {
+                for (int i = 0; i < s.length; i++) {
+                    if (s[i] == State.SQUARE_EMPTY) {
 //                    moves.add(i);
 
-                    int score = -genScore(s, i);
+                        int score = -genScore(s, i);
 
-                    sc2.put(i, score);
+                        sc2.put(i, score);
+                    }
+                }
+
+                HashMap<Integer, Integer> sorted = sortMap(sc2);
+
+                System.out.println(sorted);
+
+                Iterator<Map.Entry<Integer, Integer>> x = sorted.entrySet().iterator();
+                int test = sorted.entrySet().iterator().next().getValue();
+                int count = 0;
+
+                while (x.hasNext()) {
+                    if (x.next().getValue() == test) {
+                        count++;
+                    }
+                }
+
+                ArrayList<Integer> possibleMoves = new ArrayList<>(sorted.keySet());
+
+                int move = possibleMoves.get(new Random().nextInt(count));
+
+                System.out.println(move);
+
+                // TODO: redo if false
+                isValid = takeSquare(move);
+
+                if (isValid) {
+                    State aiState;
+                    if (playerPiece == State.SQUARE_X) {
+                        aiState = State.SQUARE_O;
+                    }
+                    else {
+                        aiState = State.SQUARE_X;
+                    }
+
+                    updateAI(move, aiState);
                 }
             }
-
-            HashMap<Integer, Integer> sorted = sortMap(sc2);
-
-            System.out.println(sorted);
-
-            Iterator<Map.Entry<Integer, Integer>> x = sorted.entrySet().iterator();
-            int test = sorted.entrySet().iterator().next().getValue();
-            int count = 0;
-
-            while (x.hasNext()) {
-                if (x.next().getValue() == test) {
-                    count++;
-                }
-            }
-
-            ArrayList<Integer> possibleMoves = new ArrayList<Integer>(sorted.keySet());
-
-            int move = possibleMoves.get(new Random().nextInt(count));
-
-            System.out.println(move);
-
-            // TODO: redo if false
-            takeSquare(move);
         }
         else if (aiLevel == AILevel.MEDIUM) {
             System.out.println("MEDIUM AI MOVES");
-            Random r = new Random();
-            while (takeSquare(r.nextInt(NUM_SQUARES))) {
-                // TODO: redo this
+            while (!isValid) {
+                Random r = new Random();
+
+                int move = r.nextInt(NUM_SQUARES);
+
+                isValid = takeSquare(move);
+
+                if (isValid) {
+                    State aiState;
+                    if (playerPiece == State.SQUARE_X) {
+                        aiState = State.SQUARE_O;
+                    }
+                    else {
+                        aiState = State.SQUARE_X;
+                    }
+
+                    updateAI(move, aiState);
+                }
             }
         }
         else if (aiLevel == AILevel.HARD) {
-            System.out.println("HARD AI MOVES");
-            State[] s = new State[NUM_SQUARES];
-            for (int i = 0; i < s.length; i++) {
-                s[i] = squares[i];
-            }
+            while (!isValid) {
+                System.out.println("HARD AI MOVES");
+                State[] s = new State[NUM_SQUARES];
+                for (int i = 0; i < s.length; i++) {
+                    s[i] = squares[i];
+                }
 
-//            ArrayList<Integer> moves = new ArrayList<>();
+    //            ArrayList<Integer> moves = new ArrayList<>();
 
-            HashMap<Integer, Integer> sc2 = new HashMap<>();
+                HashMap<Integer, Integer> sc2 = new HashMap<>();
 
-            //moves = generateMoves();
-            for (int i = 0; i < s.length; i++) {
-                if (s[i] == State.SQUARE_EMPTY) {
-//                    moves.add(i);
+                //moves = generateMoves();
+                for (int i = 0; i < s.length; i++) {
+                    if (s[i] == State.SQUARE_EMPTY) {
+    //                    moves.add(i);
 
-                    int score = genScore(s, i);
+                        int score = genScore(s, i);
 
-                    sc2.put(i, score);
+                        sc2.put(i, score);
+                    }
+                }
+
+                HashMap<Integer, Integer> sorted = sortMap(sc2);
+
+                System.out.println(sorted);
+
+                Iterator<Map.Entry<Integer, Integer>> x = sorted.entrySet().iterator();
+                int test = sorted.entrySet().iterator().next().getValue();
+                int count = 0;
+
+                while (x.hasNext()) {
+                    if (x.next().getValue() == test) {
+                        count++;
+                    }
+                }
+
+                ArrayList<Integer> possibleMoves = new ArrayList<>(sorted.keySet());
+
+                int move = possibleMoves.get(new Random().nextInt(count));
+
+                System.out.println(move);
+
+                // TODO: redo if false
+                isValid = takeSquare(move);
+
+                if (isValid) {
+                    State aiState;
+                    if (playerPiece == State.SQUARE_X) {
+                        aiState = State.SQUARE_O;
+                    }
+                    else {
+                        aiState = State.SQUARE_X;
+                    }
+
+                    updateAI(move, aiState);
                 }
             }
-
-            HashMap<Integer, Integer> sorted = sortMap(sc2);
-
-            System.out.println(sorted);
-
-            Iterator<Map.Entry<Integer, Integer>> x = sorted.entrySet().iterator();
-            int test = sorted.entrySet().iterator().next().getValue();
-            int count = 0;
-
-            while (x.hasNext()) {
-                if (x.next().getValue() == test) {
-                    count++;
-                }
-            }
-
-            ArrayList<Integer> possibleMoves = new ArrayList<>(sorted.keySet());
-
-            int move = possibleMoves.get(new Random().nextInt(count));
-
-            System.out.println(move);
-
-            // TODO: redo if false
-            takeSquare(move);
         }
         else {
             System.err.println("Board error: Incorrect AI level");
@@ -276,6 +345,10 @@ class Board {
 
     private boolean takeSquare(int square) {
         boolean result = false;
+
+        if (squares[square] == State.SQUARE_EMPTY) {
+            result = true;
+        }
 
         return result;
     }
