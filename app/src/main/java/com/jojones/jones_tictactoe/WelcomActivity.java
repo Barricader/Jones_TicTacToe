@@ -24,13 +24,6 @@ public class WelcomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
-
-        // Check if pref already saved
-            infoState = 1;
-            ((TextView) findViewById(R.id.txtQuestion)).setText("Player 1's Name");
-            ((EditText) findViewById(R.id.etAnswer)).setText("PlayerOne");
-            findViewById(R.id.tbYesNo).setVisibility(View.INVISIBLE);
-            findViewById(R.id.etAnswer).setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("SetTextI18n")
@@ -44,14 +37,6 @@ public class WelcomActivity extends AppCompatActivity {
 
             switch (infoState) {
                 case 0:
-                    success = true;
-
-                        question.setText("Player 1's Name");
-                        text.setText("PlayerOne");
-                        btnSaved.setVisibility(View.INVISIBLE);
-                        text.setVisibility(View.VISIBLE);
-                    break;
-                case 1:
                     // Check if name is not empty
                     // TODO: choose AI level
                     if (!text.getText().toString().trim().equals("")) {
@@ -62,7 +47,7 @@ public class WelcomActivity extends AppCompatActivity {
                         text.setText("");
                     }
                     break;
-                case 2:
+                case 1:
                     // Check if name is not empty
                     if (!text.getText().toString().trim().equals("")) {
                         pTwoName = text.getText().toString();
@@ -75,7 +60,7 @@ public class WelcomActivity extends AppCompatActivity {
                         (findViewById(R.id.imgTheme03)).setVisibility(View.VISIBLE);
                     }
                     break;
-                case 3:
+                case 2:
                     if (theme > 0) {
                         success = true;
 
