@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jojones.jones_tictactoe.MainActivity">
+
+    <ImageView
+        android:id="@+id/imgGrid"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/grid" />
+
+    <ImageView
+        android:id="@+id/square0"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="100dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square1"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="146dp"
+        android:layout_marginTop="100dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="286dp"
+        android:layout_marginTop="100dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square3"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="240dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square4"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="146dp"
+        android:layout_marginTop="240dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square5"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="286dp"
+        android:layout_marginTop="240dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square6"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="380dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square7"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="146dp"
+        android:layout_marginTop="380dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/square8"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="286dp"
+        android:layout_marginTop="380dp"
+        android:onClick="squarePressed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/txtNameTurn"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnRetry"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="125dp"
+        android:onClick="playAgain"
+        android:text="Play Again?"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+</android.support.constraint.ConstraintLayout>
