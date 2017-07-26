@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.TestLooperManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         switch (WelcomActivity.theme) {
             case 1:
@@ -159,22 +162,35 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            //Currently super broken
 
-//            Currently super broken
-//            MongoClient mongoClient = null;
-//            MongoCredential credential = MongoCredential.createMongoCRCredential("root", "tictactoe", "r3mgs1mZmBDz".toCharArray());
-//            try {
-//                ServerAddress adr = new ServerAddress("ec2-52-15-229-64.us-east-2.compute.amazonaws.com", 27017);
-//                mongoClient = new MongoClient(adr,Arrays.asList(credential));
-//                DB db = mongoClient.getDB("tictactoe");
-//                DBCollection coll = db.getCollection("scores");
-//                Log.e("HEYO", Long.toString(coll.getCount()));
-//            } catch (UnknownHostException e) {
-//                e.printStackTrace();
-//            }
-
+            ExecuteAsyncMethod();
             findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
         }
 
+    }
+
+    public void ExecuteAsyncMethod(){
+        new OpenMongoConnectionTask().execute();
+    }
+}
+
+class OpenMongoConnectionTask extends AsyncTask<Void, Void, Void> {
+    protected Void doInBackground(Void... voids) {
+        MongoClient mongoClient = null;
+        MongoCredential credential = MongoCredential.createScramSha1Credential("root", "admin", "Mv21Uf5WYkj4".toCharArray());
+        try {
+            ServerAddress adr = new ServerAddress("13.59.196.169", 27017);
+            mongoClient = new MongoClient(adr,Arrays.asList(credential));
+            DB db = mongoClient.getDB("tictactoe");
+            DBCollection coll = db.getCollection("scores");
+            BasicDBObject doc = new BasicDBObject("name", "MongoDB").append("playername", "score")
+                    .append("count", 1)
+                    .append("info", new BasicDBObject("x", 203).append("y", 102));
+            coll.insert(doc);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
