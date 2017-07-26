@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateImg(int img, Board.State s) {
         imgs[img].setImageBitmap(s == Board.State.SQUARE_O ? activeO : activeX);
+
     }
 
     public void squarePressed(View view) {
