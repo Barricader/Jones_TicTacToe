@@ -6,9 +6,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Board b;
@@ -122,6 +134,19 @@ public class MainActivity extends AppCompatActivity {
                 default:
 
             }
+
+//            Currently super broken
+//            MongoClient mongoClient = null;
+//            MongoCredential credential = MongoCredential.createMongoCRCredential("root", "tictactoe", "r3mgs1mZmBDz".toCharArray());
+//            try {
+//                ServerAddress adr = new ServerAddress("ec2-52-15-229-64.us-east-2.compute.amazonaws.com", 27017);
+//                mongoClient = new MongoClient(adr,Arrays.asList(credential));
+//                DB db = mongoClient.getDB("tictactoe");
+//                DBCollection coll = db.getCollection("scores");
+//                Log.e("HEYO", Long.toString(coll.getCount()));
+//            } catch (UnknownHostException e) {
+//                e.printStackTrace();
+//            }
 
             findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
         }

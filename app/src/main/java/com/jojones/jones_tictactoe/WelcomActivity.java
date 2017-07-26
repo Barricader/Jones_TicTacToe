@@ -33,7 +33,7 @@ public class WelcomActivity extends AppCompatActivity {
 
             TextView question = (TextView) findViewById(R.id.txtQuestion);
             EditText text = (EditText) findViewById(R.id.etAnswer);
-            ToggleButton btnSaved = (ToggleButton) findViewById(R.id.tbYesNo);
+            //ToggleButton btnSaved = (ToggleButton) findViewById(R.id.tbYesNo);
 
             switch (infoState) {
                 case 0:
