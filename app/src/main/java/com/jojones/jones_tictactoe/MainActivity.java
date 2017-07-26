@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.TestLooperManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -75,9 +76,31 @@ public class MainActivity extends AppCompatActivity {
         imgs[img].setImageBitmap(s == Board.State.SQUARE_O ? activeO : activeX);
 
     }
+    public void changeTurn(){
+        alternatePlayer();
+    }
+    public static int turnCounter = 0;
+    public void alternatePlayer(){
+
+        if (turnCounter % 2 ==0){
+            updateplayerStats(activeX,WelcomActivity.pOneName );
+
+        }
+            turnCounter++;
+    }
+    public void updateplayerStats(Bitmap avatar, String playerName){
+        ImageView playerPiece = (ImageView) findViewById(R.id.piecePreview);
+        TextView playerTurn = (TextView) findViewById(R.id.txtNameTurn);
+        playerTurn.setText(playerName);
+        playerPiece.setImageBitmap(avatar);
+
+    }
 
     public void squarePressed(View view) {
         int squareID = -1;
+
+            changeTurn();
+
 
         switch (view.getId()) {
             case R.id.square0:
@@ -136,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+
 //            Currently super broken
 //            MongoClient mongoClient = null;
 //            MongoCredential credential = MongoCredential.createMongoCRCredential("root", "tictactoe", "r3mgs1mZmBDz".toCharArray());
@@ -151,5 +175,6 @@ public class MainActivity extends AppCompatActivity {
 
             findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
         }
+
     }
 }

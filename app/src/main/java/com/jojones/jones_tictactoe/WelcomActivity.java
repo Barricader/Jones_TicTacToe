@@ -43,16 +43,8 @@ public class WelcomActivity extends AppCompatActivity {
                         pOneName = text.getText().toString();
                         success = true;
 
-                        question.setText("Player 2's Name");
-                        text.setText("");
-                    }
-                    break;
-                case 1:
-                    // Check if name is not empty
-                    if (!text.getText().toString().trim().equals("")) {
-                        pTwoName = text.getText().toString();
-                        success = true;
-
+//                        question.setText("Player 2's Name");
+//                        text.setText("");
                         question.setText("Theme");
                         text.setVisibility(View.GONE);
                         (findViewById(R.id.imgTheme01)).setVisibility(View.VISIBLE);
@@ -60,13 +52,20 @@ public class WelcomActivity extends AppCompatActivity {
                         (findViewById(R.id.imgTheme03)).setVisibility(View.VISIBLE);
                     }
                     break;
-                case 2:
+                case 1:
+                    // Check if name is not empty
+//                    if (!text.getText().toString().trim().equals("")) {
+//                        pTwoName = text.getText().toString();
+                        success = true;
                     if (theme > 0) {
                         success = true;
 
                         goToGame();
                     }
+
+//                    }
                     break;
+
                 default:
 
             }
