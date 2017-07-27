@@ -177,12 +177,13 @@
 
     <TextView
         android:id="@+id/z1"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -194,12 +195,13 @@
 
     <TextView
         android:id="@+id/z2"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -211,12 +213,13 @@
 
     <TextView
         android:id="@+id/z3"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -228,12 +231,13 @@
 
     <TextView
         android:id="@+id/z4"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -245,12 +249,13 @@
 
     <TextView
         android:id="@+id/z5"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -261,12 +266,13 @@
 
     <TextView
         android:id="@+id/z6"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -278,12 +284,13 @@
 
     <TextView
         android:id="@+id/z7"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -295,12 +302,13 @@
 
     <TextView
         android:id="@+id/z8"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -312,12 +320,13 @@
 
     <TextView
         android:id="@+id/z9"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -329,12 +338,13 @@
 
     <TextView
         android:id="@+id/z10"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
         android:text="-"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -352,14 +362,17 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
         android:text="Player Name"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <TextView
         android:id="@+id/z1w"

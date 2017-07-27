@@ -185,12 +185,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void LeaderboardHandler(View view){
-        for (int i = 0; i < leaderboard.length; i++) {
-            Log.e("parsing...", leaderboard[i] + "ES");
+        for (int i =0; i  < leaderboard.length; i++){
+            Log.e("leaderboardinhandler", leaderboard[i] + "                              |");
         }
         Intent intent = new Intent(this,Leaderboard.class);
         intent.putExtra("leaderboardarray", leaderboard);
         startActivity(intent);
+    }
+    public static void setLB(String[] lb){
+        leaderboard = lb;
     }
 
 }
@@ -199,6 +202,7 @@ class OpenMongoConnectionTask extends AsyncTask<String[], Void, String[]> {
     protected String[] doInBackground(String[]... strings) {
         MongoClient mongoClient = null;
         MongoCredential credential = MongoCredential.createScramSha1Credential("root", "admin", "Mv21Uf5WYkj4".toCharArray());
+        String[] lb = new String[10];
         try {
             ServerAddress adr = new ServerAddress("13.59.196.169", 27017);
             mongoClient = new MongoClient(adr,Arrays.asList(credential));
@@ -233,25 +237,25 @@ class OpenMongoConnectionTask extends AsyncTask<String[], Void, String[]> {
 
 
             DBCursor collcur = coll.find();
-            collcur.sort(new BasicDBObject("score",-1));
-            collcur.limit(10);
-            String[] lb = strings[0];
+//            collcur.sort(new BasicDBObject("score",-1));
+//            collcur.limit(10);
+              lb = strings[0];
             for (int i = 0; i < collcur.count(); i++){
                 lb[i] = collcur.next().toString();
                 Log.e("H",Integer.toString(collcur.count()) + Integer.toString(i));
                 Log.e("HELLO", "populating "+Integer.toString(i)+" with "+ collcur.next().toString());
             }
-            return lb;
 
         } catch (Exception e){
             e.printStackTrace();
             Log.e("Didn't","even work xDDD");
 
         }
-        return null;
+        return lb;
     }
     protected void onPostExecute(String[] result){
-        MainActivity.leaderboard = result;
-        Log.e("onpostexecute","hit");
+        MainActivity.setLB(result);
+
+        Log.e("onpostexecute",Integer.toString(result.length));
     }
 }
