@@ -9,5 +9,9 @@ public class Leaderboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
+
+        String[] lb = MainActivity.leaderboard;
+        //int picId = getResources().getIdentifier("1", "layout", getApplicationContext().getPackageName());
+
     }
 }
