@@ -141,11 +141,24 @@
         android:layout_width="160dp"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="125dp"
-        android:onClick="playAgain"
-        android:text="Play Again?"
+        android:layout_marginLeft="30dp"
+        android:onClick="newGame"
+        android:text="New Game"
         android:textSize="24sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <Button
+        android:id="@+id/btnReplay"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="225dp"
+        android:onClick="replay"
+        android:text="Rematch"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 </android.support.constraint.ConstraintLayout>

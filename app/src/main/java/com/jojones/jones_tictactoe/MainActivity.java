@@ -1,7 +1,9 @@
 package com.jojones.jones_tictactoe;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -70,7 +72,14 @@ public class MainActivity extends AppCompatActivity {
         imgs[8] = (ImageView) findViewById(R.id.square8);
     }
 
-    public void playAgain(View view) {
+    public void newGame(View view) {
+        Intent myIntent = new Intent(this, WelcomActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void replay(View view) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.tictac", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString("id", "replay").apply();
         Intent myIntent = new Intent(this, WelcomActivity.class);
         startActivity(myIntent);
     }
@@ -166,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
             ExecuteAsyncMethod();
             findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnReplay).setVisibility(View.VISIBLE);
         }
 
     }
