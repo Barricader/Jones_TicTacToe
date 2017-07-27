@@ -33,21 +33,23 @@ public class WelcomActivity extends AppCompatActivity {
 
             TextView question = (TextView) findViewById(R.id.txtQuestion);
             EditText text = (EditText) findViewById(R.id.etAnswer);
-            ToggleButton btnSaved = (ToggleButton) findViewById(R.id.tbYesNo);
 
             switch (infoState) {
                 case 0:
                     // Check if name is not empty
-                    // TODO: choose AI level
                     if (!text.getText().toString().trim().equals("")) {
                         pOneName = text.getText().toString();
                         success = true;
 
-                        question.setText("Player 2's Name");
+                        question.setText("Game Piece\n(X goes first)");
                         text.setText("");
                     }
                     break;
                 case 1:
+                    // TODO: choose AI level
+                    success = true;
+                    break;
+                case 2:
                     // Check if name is not empty
                     if (!text.getText().toString().trim().equals("")) {
                         pTwoName = text.getText().toString();
@@ -60,7 +62,7 @@ public class WelcomActivity extends AppCompatActivity {
                         (findViewById(R.id.imgTheme03)).setVisibility(View.VISIBLE);
                     }
                     break;
-                case 2:
+                case 3:
                     if (theme > 0) {
                         success = true;
 
@@ -81,6 +83,16 @@ public class WelcomActivity extends AppCompatActivity {
         ImageView border = (ImageView) findViewById(R.id.imgBorder);
 
         switch (view.getId()) {
+            case R.id.imgO:
+                theme = 1;
+                border.setVisibility(View.VISIBLE);
+                border.setX(findViewById(R.id.imgO).getX() - 3);
+                break;
+            case R.id.imgX:
+                theme = 1;
+                border.setVisibility(View.VISIBLE);
+                border.setX(findViewById(R.id.imgO).getX() - 3);
+                break;
             case R.id.imgTheme01:
                 theme = 1;
                 border.setVisibility(View.VISIBLE);

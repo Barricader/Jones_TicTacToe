@@ -47,6 +47,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/imgO"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="350dp"
+        android:layout_marginLeft="100dp"
+        android:onClick="imgPressed"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:srcCompat="@drawable/o_01" />
+
+    <ImageView
+        android:id="@+id/imgX"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="350dp"
+        android:layout_marginRight="100dp"
+        android:onClick="imgPressed"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/x_01" />
+
+    <ImageView
         android:id="@+id/imgTheme01"
         android:layout_width="80dp"
         android:layout_height="80dp"
