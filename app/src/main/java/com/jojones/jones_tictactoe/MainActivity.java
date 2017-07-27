@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
@@ -26,16 +27,17 @@ import com.mongodb.ServerAddress;
 import org.json.JSONObject;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Board b;
+    static Board b;
     ImageView[] imgs = new ImageView[Board.NUM_SQUARES];
     Bitmap activeX;
     Bitmap activeO;
-    public static String playerName;
-
+    static String playerName;
+    static String[] leaderboard = new String[10];
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,9 +166,11 @@ public class MainActivity extends AppCompatActivity {
             switch (b.winner) {
                 case 1:
                     ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pOneName + "\nWINS!");
+                    ExecuteAsyncMethod();
                     break;
                 case 2:
                     ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pTwoName + "\nWINS!");
+                    ExecuteAsyncMethod();
                     break;
                 case 3:
                     ((TextView) findViewById(R.id.txtNameTurn)).setText("It is a tie!");
@@ -177,11 +181,13 @@ public class MainActivity extends AppCompatActivity {
 
             findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
             findViewById(R.id.btnReplay).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnLeaderboard).setVisibility(View.VISIBLE);
         }
-        Log.e("Does this","even get hit?");
-        ExecuteAsyncMethod();
     }
-
+    public void LeaderboardHandler(View view){
+        Intent intent = new Intent(this,Leaderboard.class);
+        startActivity(intent);
+    }
     public void ExecuteAsyncMethod(){
         new OpenMongoConnectionTask().execute();
     }
@@ -200,12 +206,31 @@ class OpenMongoConnectionTask extends AsyncTask<Void, Void, Void> {
             whereQuery.put("name", MainActivity.playerName);
             if(coll.count(whereQuery) == 0) {
                 Log.e("HELLO", "HELLO");
-                BasicDBObject doc = new BasicDBObject("name", MainActivity.playerName).append("score","whatever score is???");
+                BasicDBObject doc;
+                if (MainActivity.b.winner == 1){
+                    doc = new BasicDBObject("name", MainActivity.playerName).append("score",1).append("computerscore",0);
+                } else {
+                    doc = new BasicDBObject("name", MainActivity.playerName).append("score",0).append("computerscore",1);
+                }
                 coll.insert(doc);
             } else {
-                Log.e("Add","To Score");
+                BasicDBObject incrDoc;
+                if (MainActivity.b.winner == 1){
+                    incrDoc = new BasicDBObject().append("$inc", new BasicDBObject().append("score",1));
+                } else {
+                    incrDoc = new BasicDBObject().append("$inc", new BasicDBObject().append("computerscore",1));
+                }
+                coll.update(new BasicDBObject().append("name",MainActivity.playerName),incrDoc);
             }
-
+            DBCursor collcur = coll.find();
+            collcur.sort(new BasicDBObject("name",-1));
+            collcur.limit(10);
+            int i=0;
+            MainActivity.leaderboard = new String[10];
+            while(collcur.hasNext()){
+                i++;
+                MainActivity.leaderboard[i] = collcur.next().toString();
+            }
         } catch (Exception e){
             e.printStackTrace();
             Log.e("Didn't","even work xDDD");
