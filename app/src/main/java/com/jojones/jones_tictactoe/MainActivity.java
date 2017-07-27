@@ -166,11 +166,9 @@ public class MainActivity extends AppCompatActivity {
             switch (b.winner) {
                 case 1:
                     ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pOneName + "\nWINS!");
-                    ExecuteAsyncMethod();
                     break;
                 case 2:
                     ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pTwoName + "\nWINS!");
-                    ExecuteAsyncMethod();
                     break;
                 case 3:
                     ((TextView) findViewById(R.id.txtNameTurn)).setText("It is a tie!");
@@ -178,23 +176,27 @@ public class MainActivity extends AppCompatActivity {
                 default:
 
             }
-
             findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
             findViewById(R.id.btnReplay).setVisibility(View.VISIBLE);
+
             findViewById(R.id.btnLeaderboard).setVisibility(View.VISIBLE);
+            OpenMongoConnectionTask t = new OpenMongoConnectionTask();
+            t.execute(leaderboard);
         }
     }
     public void LeaderboardHandler(View view){
+        for (int i = 0; i < leaderboard.length; i++) {
+            Log.e("parsing...", leaderboard[i] + "ES");
+        }
         Intent intent = new Intent(this,Leaderboard.class);
+        intent.putExtra("leaderboardarray", leaderboard);
         startActivity(intent);
     }
-    public void ExecuteAsyncMethod(){
-        new OpenMongoConnectionTask().execute();
-    }
+
 }
 
-class OpenMongoConnectionTask extends AsyncTask<Void, Void, Void> {
-    protected Void doInBackground(Void... voids) {
+class OpenMongoConnectionTask extends AsyncTask<String[], Void, String[]> {
+    protected String[] doInBackground(String[]... strings) {
         MongoClient mongoClient = null;
         MongoCredential credential = MongoCredential.createScramSha1Credential("root", "admin", "Mv21Uf5WYkj4".toCharArray());
         try {
@@ -205,37 +207,51 @@ class OpenMongoConnectionTask extends AsyncTask<Void, Void, Void> {
             BasicDBObject whereQuery = new BasicDBObject();
             whereQuery.put("name", MainActivity.playerName);
             if(coll.count(whereQuery) == 0) {
-                Log.e("HELLO", "HELLO");
+
                 BasicDBObject doc;
                 if (MainActivity.b.winner == 1){
                     doc = new BasicDBObject("name", MainActivity.playerName).append("score",1).append("computerscore",0);
-                } else {
+                    coll.insert(doc);
+                } else if (MainActivity.b.winner == 2){
                     doc = new BasicDBObject("name", MainActivity.playerName).append("score",0).append("computerscore",1);
+                    coll.insert(doc);
+                } else {
+                    Log.e("tie","tie is here");
                 }
-                coll.insert(doc);
             } else {
                 BasicDBObject incrDoc;
                 if (MainActivity.b.winner == 1){
                     incrDoc = new BasicDBObject().append("$inc", new BasicDBObject().append("score",1));
-                } else {
+                    coll.update(new BasicDBObject().append("name",MainActivity.playerName),incrDoc);
+                } else if (MainActivity.b.winner == 2){
                     incrDoc = new BasicDBObject().append("$inc", new BasicDBObject().append("computerscore",1));
+                    coll.update(new BasicDBObject().append("name",MainActivity.playerName),incrDoc);
+                } else {
+                    Log.e("tie","tie is here");
                 }
-                coll.update(new BasicDBObject().append("name",MainActivity.playerName),incrDoc);
             }
+
+
             DBCursor collcur = coll.find();
-            collcur.sort(new BasicDBObject("name",-1));
+            collcur.sort(new BasicDBObject("score",-1));
             collcur.limit(10);
-            int i=0;
-            MainActivity.leaderboard = new String[10];
-            while(collcur.hasNext()){
-                i++;
-                MainActivity.leaderboard[i] = collcur.next().toString();
+            String[] lb = strings[0];
+            for (int i = 0; i < collcur.count(); i++){
+                lb[i] = collcur.next().toString();
+                Log.e("H",Integer.toString(collcur.count()) + Integer.toString(i));
+                Log.e("HELLO", "populating "+Integer.toString(i)+" with "+ collcur.next().toString());
             }
+            return lb;
+
         } catch (Exception e){
             e.printStackTrace();
             Log.e("Didn't","even work xDDD");
 
         }
         return null;
+    }
+    protected void onPostExecute(String[] result){
+        MainActivity.leaderboard = result;
+        Log.e("onpostexecute","hit");
     }
 }
