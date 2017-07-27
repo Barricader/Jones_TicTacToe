@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.WindowDecorActionBar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class WelcomActivity extends AppCompatActivity {
@@ -24,6 +26,16 @@ public class WelcomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
+
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences("com.example.tictac",
+                        Context.MODE_PRIVATE);
+        String pInput = sharedPreferences.getString("id", "");
+        if(pInput.equals("replay"))
+        {
+            sharedPreferences.edit().clear().commit();
+            goToGame();
+        }
     }
 
     @SuppressLint("SetTextI18n")
