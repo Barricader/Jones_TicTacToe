@@ -23,6 +23,8 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 
+import org.json.JSONObject;
+
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView[] imgs = new ImageView[Board.NUM_SQUARES];
     Bitmap activeX;
     Bitmap activeO;
+    public static String playerName;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             turnCounter++;
     }
     public void updateplayerStats(Bitmap avatar, String playerName){
+        this.playerName = playerName;
         ImageView playerPiece = (ImageView) findViewById(R.id.piecePreview);
         TextView playerTurn = (TextView) findViewById(R.id.txtNameTurn);
         playerTurn.setText(playerName);
@@ -171,13 +175,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            //Currently super broken
-
-            ExecuteAsyncMethod();
             findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
             findViewById(R.id.btnReplay).setVisibility(View.VISIBLE);
         }
-
+        Log.e("Does this","even get hit?");
+        ExecuteAsyncMethod();
     }
 
     public void ExecuteAsyncMethod(){
@@ -194,12 +196,20 @@ class OpenMongoConnectionTask extends AsyncTask<Void, Void, Void> {
             mongoClient = new MongoClient(adr,Arrays.asList(credential));
             DB db = mongoClient.getDB("tictactoe");
             DBCollection coll = db.getCollection("scores");
-            BasicDBObject doc = new BasicDBObject("name", "MongoDB").append("playername", "score")
-                    .append("count", 1)
-                    .append("info", new BasicDBObject("x", 203).append("y", 102));
-            coll.insert(doc);
+            BasicDBObject whereQuery = new BasicDBObject();
+            whereQuery.put("name", MainActivity.playerName);
+            if(coll.count(whereQuery) == 0) {
+                Log.e("HELLO", "HELLO");
+                BasicDBObject doc = new BasicDBObject("name", MainActivity.playerName).append("score","whatever score is???");
+                coll.insert(doc);
+            } else {
+                Log.e("Add","To Score");
+            }
+
         } catch (Exception e){
             e.printStackTrace();
+            Log.e("Didn't","even work xDDD");
+
         }
         return null;
     }
