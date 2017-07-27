@@ -190,12 +190,13 @@ public class MainActivity extends AppCompatActivity {
                 default:
 
             }
-            findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnReplay).setVisibility(View.VISIBLE);
-
-            findViewById(R.id.btnLeaderboard).setVisibility(View.VISIBLE);
             OpenMongoConnectionTask t = new OpenMongoConnectionTask();
             t.execute(leaderboard);
+            try{ Thread.sleep(2000); }catch(InterruptedException e){ }
+            findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnReplay).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnLeaderboard).setVisibility(View.VISIBLE);
+
         }
     }
     public void LeaderboardHandler(View view){
