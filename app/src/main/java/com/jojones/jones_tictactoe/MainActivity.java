@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pOneName + "'s\nTurn");
 
-        b = new Board(this);
         imgs[0] = (ImageView) findViewById(R.id.square0);
         imgs[1] = (ImageView) findViewById(R.id.square1);
         imgs[2] = (ImageView) findViewById(R.id.square2);
@@ -75,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
         imgs[6] = (ImageView) findViewById(R.id.square6);
         imgs[7] = (ImageView) findViewById(R.id.square7);
         imgs[8] = (ImageView) findViewById(R.id.square8);
+
+        // TODO: get player piece
+        ((ImageView) findViewById(R.id.piecePreview)).setImageBitmap(WelcomActivity.playerPiece == 1 ? activeX : activeO);
+
+        b = new Board(this);
     }
 
     public void newGame(View view) {
@@ -110,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView playerPiece = (ImageView) findViewById(R.id.piecePreview);
         TextView playerTurn = (TextView) findViewById(R.id.txtNameTurn);
         playerTurn.setText(playerName);
-        playerPiece.setImageBitmap(avatar);
+//        playerPiece.setImageBitmap(avatar);
 
     }
 
@@ -165,10 +169,20 @@ public class MainActivity extends AppCompatActivity {
             // Player win's or a tie
             switch (b.winner) {
                 case 1:
-                    ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pOneName + "\nWINS!");
+                    if (WelcomActivity.playerPiece == 1) {
+                        ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pOneName + "\nWINS!");
+                    }
+                    else {
+                        ((TextView) findViewById(R.id.txtNameTurn)).setText("COMPUTER\nWINS!");
+                    }
                     break;
                 case 2:
-                    ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pTwoName + "\nWINS!");
+                    if (WelcomActivity.playerPiece == 1) {
+                        ((TextView) findViewById(R.id.txtNameTurn)).setText("COMPUTER\nWINS!");
+                    }
+                    else {
+                        ((TextView) findViewById(R.id.txtNameTurn)).setText(WelcomActivity.pOneName + "\nWINS!");
+                    }
                     break;
                 case 3:
                     ((TextView) findViewById(R.id.txtNameTurn)).setText("It is a tie!");
