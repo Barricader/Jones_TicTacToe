@@ -26,13 +26,16 @@ class Board {
         squares = new State[NUM_SQUARES];
         winner = 0;
         aiLevel = AILevel.HARD; // TODO: FIX
-        playerPiece = State.SQUARE_X;
-        // TODO: change above when you can choose piece
+        playerPiece = WelcomActivity.playerPiece == 1 ?  State.SQUARE_X : State.SQUARE_O;
 
         this.ma = ma;
 
         for (int i = 0; i < NUM_SQUARES; i++) {
             squares[i] = State.SQUARE_EMPTY;
+        }
+
+        if (playerPiece == State.SQUARE_O) {
+            moveAI();
         }
     }
 
@@ -179,8 +182,8 @@ class Board {
 
     private int genScore(State[] b, int i) {
         int score = 0;
-        State sqX = State.SQUARE_X;
-        State sqO = State.SQUARE_O;
+        State sqX = playerPiece;
+        State sqO = playerPiece == State.SQUARE_X ? State.SQUARE_O : State.SQUARE_X;
         final int TOP_LEFT = 0, TOP_MID = 1, TOP_RIGHT = 2,
                 MID_LEFT = 3, MID_MID = 4, MID_RIGHT = 5,
                 BOT_LEFT = 6, BOT_MID = 7, BOT_RIGHT = 8;

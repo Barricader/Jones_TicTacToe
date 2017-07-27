@@ -16,8 +16,8 @@ import android.widget.ToggleButton;
 
 public class WelcomActivity extends AppCompatActivity {
     public static String pOneName = "";
-    public static String pTwoName = "";
     public static int theme = 0;
+    public static int playerPiece = 0;
 
     private int infoState = 0;
 
@@ -53,28 +53,40 @@ public class WelcomActivity extends AppCompatActivity {
                         pOneName = text.getText().toString();
                         success = true;
 
-                        question.setText("Game Piece\n(X goes first)");
+                        question.setText("Game Piece");
                         text.setText("");
+                        text.setVisibility(View.INVISIBLE);
+
+                        findViewById(R.id.imgO).setVisibility(View.VISIBLE);
+                        findViewById(R.id.imgX).setVisibility(View.VISIBLE);
                     }
                     break;
+//                case 1:
+//                    // TODO: choose AI level
+//
+////                    if (playerPiece != 0) {
+////                        text.setVisibility(View.VISIBLE);
+////                        success = true;
+////                    }
+//
+//                    success = true;
+//                    break;
                 case 1:
-                    // TODO: choose AI level
-                    success = true;
-                    break;
-                case 2:
                     // Check if name is not empty
-                    if (!text.getText().toString().trim().equals("")) {
-                        pTwoName = text.getText().toString();
+                    if (playerPiece != 0) {
                         success = true;
 
                         question.setText("Theme");
-                        text.setVisibility(View.GONE);
+
+                        findViewById(R.id.imgO).setVisibility(View.GONE);
+                        findViewById(R.id.imgX).setVisibility(View.GONE);
+                        findViewById(R.id.imgBorder).setVisibility(View.GONE);
                         (findViewById(R.id.imgTheme01)).setVisibility(View.VISIBLE);
                         (findViewById(R.id.imgTheme02)).setVisibility(View.VISIBLE);
                         (findViewById(R.id.imgTheme03)).setVisibility(View.VISIBLE);
                     }
                     break;
-                case 3:
+                case 2:
                     if (theme > 0) {
                         success = true;
 
@@ -96,14 +108,14 @@ public class WelcomActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.imgO:
-                theme = 1;
+                playerPiece = 2;
                 border.setVisibility(View.VISIBLE);
                 border.setX(findViewById(R.id.imgO).getX() - 3);
                 break;
             case R.id.imgX:
-                theme = 1;
+                playerPiece = 1;
                 border.setVisibility(View.VISIBLE);
-                border.setX(findViewById(R.id.imgO).getX() - 3);
+                border.setX(findViewById(R.id.imgX).getX() - 3);
                 break;
             case R.id.imgTheme01:
                 theme = 1;
