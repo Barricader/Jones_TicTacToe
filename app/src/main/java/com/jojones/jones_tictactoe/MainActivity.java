@@ -251,9 +251,8 @@ class OpenMongoConnectionTask extends AsyncTask<String[], Void, String[]> {
 
 
             DBCursor collcur = coll.find();
-//            collcur.sort(new BasicDBObject("score",-1));
-//            collcur.limit(10);
-              lb = strings[0];
+            collcur.sort(new BasicDBObject("score",-1));
+            lb = strings[0];
             for (int i = 0; i < collcur.count(); i++){
                 lb[i] = collcur.next().toString();
                 Log.e("H",Integer.toString(collcur.count()) + Integer.toString(i));
