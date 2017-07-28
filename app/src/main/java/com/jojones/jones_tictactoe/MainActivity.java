@@ -240,19 +240,9 @@ public class MainActivity extends AppCompatActivity {
                 default:
 
             }
-            OpenMongoConnectionTask t = new OpenMongoConnectionTask();
-            t.execute(leaderboard);
-            try{ Thread.sleep(2000); }catch(InterruptedException e){ }
-            findViewById(R.id.btnRetry).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnReplay).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnLeaderboard).setVisibility(View.VISIBLE);
-
         }
     }
     public void LeaderboardHandler(View view){
-        for (int i =0; i  < leaderboard.length; i++){
-            Log.e("leaderboardinhandler", leaderboard[i] + "                              |");
-        }
         Intent intent = new Intent(this,Leaderboard.class);
         intent.putExtra("leaderboardarray", leaderboard);
         startActivity(intent);
@@ -285,7 +275,6 @@ class OpenMongoConnectionTask extends AsyncTask<String[], Void, String[]> {
                     doc = new BasicDBObject("name", MainActivity.playerName).append("score",0).append("computerscore",1);
                     coll.insert(doc);
                 } else {
-                    Log.e("tie","tie is here");
                 }
             } else {
                 BasicDBObject incrDoc;
@@ -296,7 +285,6 @@ class OpenMongoConnectionTask extends AsyncTask<String[], Void, String[]> {
                     incrDoc = new BasicDBObject().append("$inc", new BasicDBObject().append("computerscore",1));
                     coll.update(new BasicDBObject().append("name",MainActivity.playerName),incrDoc);
                 } else {
-                    Log.e("tie","tie is here");
                 }
             }
 
@@ -306,20 +294,14 @@ class OpenMongoConnectionTask extends AsyncTask<String[], Void, String[]> {
             lb = strings[0];
             for (int i = 0; i < collcur.count(); i++){
                 lb[i] = collcur.next().toString();
-                Log.e("H",Integer.toString(collcur.count()) + Integer.toString(i));
-                Log.e("HELLO", "populating "+Integer.toString(i)+" with "+ collcur.next().toString());
             }
 
         } catch (Exception e){
             e.printStackTrace();
-            Log.e("Didn't","even work xDDD");
-
         }
         return lb;
     }
     protected void onPostExecute(String[] result){
         MainActivity.setLB(result);
-
-        Log.e("onpostexecute",Integer.toString(result.length));
     }
 }

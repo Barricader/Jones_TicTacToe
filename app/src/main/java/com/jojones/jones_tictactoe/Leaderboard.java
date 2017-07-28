@@ -19,16 +19,16 @@ public class Leaderboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-
-        Intent intent = getIntent();
-        String[] lb = intent.getStringArrayExtra("leaderboardarray");
         JSONObject reader = new JSONObject();
         String name;
         int score;
         int compscore;
         int tVId;
         TextView tv;
-
+        OpenMongoConnectionTask t = new OpenMongoConnectionTask();
+        t.execute(MainActivity.leaderboard);
+        try{ Thread.sleep(4000); }catch(InterruptedException e){ }
+        String[] lb = MainActivity.leaderboard;
         for (int i = 0; i < lb.length; i++){
             if (lb[i] == null){
                 lb[i] = "\"name\" : \"-\" , \"score\" : 0 , \"computerscore\" : 0";
