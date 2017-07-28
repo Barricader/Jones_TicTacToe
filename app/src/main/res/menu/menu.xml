@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/Replay"
+        android:title="Replay"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/Restart"
+        android:title="Restart"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/Exit"
+        android:title="Exit"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/Score"
+        android:title="Score"
+        app:showAsAction="always"/>
+
+
+</menu>

@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.os.TestLooperManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,6 +82,53 @@ public class MainActivity extends AppCompatActivity {
         ((ImageView) findViewById(R.id.piecePreview)).setImageBitmap(WelcomActivity.playerPiece == 1 ? activeX : activeO);
 
         b = new Board(this);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater =getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.Replay:
+                Intent myIntent = new Intent(this, WelcomActivity.class);
+                startActivity(myIntent);
+
+                return true;
+
+            case R.id.Restart:
+                SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.tictac", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("id", "replay").apply();
+                Intent myIntent2 = new Intent(this, WelcomActivity.class);
+                startActivity(myIntent2);
+
+                return true;
+
+            case R.id.Exit:
+                finish();
+                moveTaskToBack(true);
+                System.exit(1);
+
+                return true;
+
+            case R.id.Score:
+                
+                for (int i =0; i  < leaderboard.length; i++){
+                    Log.e("leaderboardinhandler", leaderboard[i] + "                              |");
+                }
+                Intent intent = new Intent(this,Leaderboard.class);
+                intent.putExtra("leaderboardarray", leaderboard);
+                startActivity(intent);
+
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void newGame(View view) {
