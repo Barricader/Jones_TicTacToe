@@ -131,6 +131,7 @@
         android:layout_height="80dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:gravity="bottom"
         android:textAlignment="center"
         android:textSize="32sp"
         app:layout_constraintLeft_toLeftOf="parent"
