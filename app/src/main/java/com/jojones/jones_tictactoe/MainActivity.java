@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.Score:
-                
+
                 for (int i =0; i  < leaderboard.length; i++){
                     Log.e("leaderboardinhandler", leaderboard[i] + "                              |");
                 }
